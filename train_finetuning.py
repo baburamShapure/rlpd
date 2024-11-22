@@ -1,4 +1,6 @@
-#! /usr/bin/env python
+
+print("Gentle reminder that the default xml has been changed for half-cheetah!")
+
 import os
 import pickle
 
@@ -31,7 +33,7 @@ from rlpd.wrappers import wrap_gym
 
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("project_name", "rlpd", "wandb project name.")
+flags.DEFINE_string("project_name", "rlpd_locomotion", "wandb project name.")
 flags.DEFINE_string("env_name", "halfcheetah-expert-v2", "D4rl dataset name.")
 flags.DEFINE_float("offline_ratio", 0.5, "Offline ratio.")
 flags.DEFINE_integer("seed", 42, "Random seed.")
@@ -114,12 +116,16 @@ def main(_):
     eval_env = wrap_gym(eval_env, rescale_actions=True)
     eval_env.seed(FLAGS.seed + 42)
 
+
+
+
     kwargs = dict(FLAGS.config)
     model_cls = kwargs.pop("model_cls")
     agent = globals()[model_cls].create(
         FLAGS.seed, env.observation_space, env.action_space, **kwargs
     )
 
+   
     replay_buffer = ReplayBuffer(
         env.observation_space, env.action_space, FLAGS.max_steps
     )
